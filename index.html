@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebZIP · Konverter Website ke Arsip</title>
+    <meta name="description" content="Ubah website lengkap menjadi file ZIP instan. Masukkan URL, klik konversi, unduh arsip halaman.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== NEOBRUTALISM STYLE (dari source) ========== */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: #e8e4d9;
+            --bg-secondary: #fff;
+            --bg-card: #fff;
+            --border-color: #000;
+            --text-primary: #000;
+            --text-secondary: #333;
+            --text-muted: #666;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --pink: #ff6b9d;
+            --yellow: #ffd93d;
+            --cyan: #00d4ff;
+            --lime: #c4ff61;
+            --shadow: 4px 4px 0px #000;
+            --shadow-hover: 6px 6px 0px #000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 580px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-top: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .vip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            background-color: var(--pink);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 2px solid #000;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 3px solid var(--border-color);
+            border-radius: 0;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group .hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-secondary);
+            border: 3px solid var(--border-color);
+            border-radius: 0;
+            color: var(--text-primary);
+            transition: all 0.2s;
+            font-weight: 500;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: var(--shadow);
+            transform: translate(-2px, -2px);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .example-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .example-btn {
+            background: var(--yellow);
+            border: 2px solid var(--border-color);
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 2px 2px 0px #000;
+            text-transform: uppercase;
+        }
+
+        .example-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            border: 3px solid var(--border-color);
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translate(-2px, -2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translate(2px, 2px);
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        .alert {
+            padding: 14px 18px;
+            border: 3px solid var(--border-color);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: none;
+            box-shadow: var(--shadow);
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background-color: var(--lime);
+            color: #000;
+        }
+
+        .alert-error {
+            background-color: var(--pink);
+            color: #000;
+        }
+
+        .result-card {
+            margin-top: 20px;
+            background-color: var(--bg-card);
+            border: 3px solid var(--border-color);
+            padding: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        .download-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .download-link {
+            font-size: 0.8rem;
+            word-break: break-all;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .btn-small {
+            background: var(--cyan);
+            border: 2px solid var(--border-color);
+            padding: 8px 16px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 2px 2px 0px #000;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .btn-small:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .footer-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .footer-decoration span {
+            width: 14px;
+            height: 14px;
+            border-radius: 0;
+            border: 2px solid var(--border-color);
+            transform: rotate(45deg);
+        }
+
+        .footer-decoration span:nth-child(1) { background: var(--accent); }
+        .footer-decoration span:nth-child(2) { background: var(--pink); }
+        .footer-decoration span:nth-child(3) { background: var(--yellow); }
+        .footer-decoration span:nth-child(4) { background: var(--lime); }
+        .footer-decoration span:nth-child(5) { background: var(--cyan); }
+
+        @media (max-width: 550px) {
+            .container { padding: 12px; }
+            .card { padding: 20px; }
+            .header h1 { font-size: 1.8rem; }
+            .btn { padding: 12px 16px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                🌐 WebZIP 
+                <span class="vip-badge">ARCHIVE</span>
+            </h1>
+            <p>Ubah website menjadi file ZIP instan • Simpan halaman lengkap</p>
+        </div>
+
+        <div id="alertBox" class="alert"></div>
+
+        <div class="card">
+            <div class="form-group">
+                <label>🔗 URL Website</label>
+                <input type="text" id="urlInput" class="form-input" placeholder="https://example.com atau subdomain.domain.com" value="books.toscrape.com">
+                <div class="hint">Masukkan alamat website (termasuk halaman apapun). Arsip ZIP berisi HTML, CSS, JS, gambar.</div>
+                <div class="example-row">
+                    <button type="button" class="example-btn" data-url="books.toscrape.com">📚 books.toscrape.com</button>
+                    <button type="button" class="example-btn" data-url="example.com">🌍 example.com</button>
+                    <button type="button" class="example-btn" data-url="yogaxd-topup.zone.id/topup">⚡ demo web</button>
+                </div>
+            </div>
+
+            <button id="convertBtn" class="btn btn-primary">
+                <span>📦</span> Konversi ke ZIP
+            </button>
+
+            <div id="resultArea"></div>
+        </div>
+
+        <div class="btn-group">
+            <a href="#" class="btn btn-secondary" id="backMockBtn">← Beranda</a>
+            <a href="#" class="btn btn-secondary" id="infoMock">Info Layanan</a>
+        </div>
+
+        <div class="footer-decoration">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p style="text-align: center; font-size: 0.7rem; margin-top: 24px; font-weight: 500;">Powered by NexRay API · Web to ZIP Archiver</p>
+    </div>
+
+    <script>
+        // DOM Elements
+        const urlInput = document.getElementById('urlInput');
+        const convertBtn = document.getElementById('convertBtn');
+        const resultArea = document.getElementById('resultArea');
+        const alertBox = document.getElementById('alertBox');
+
+        // Helper validasi dan normalisasi URL
+        function normalizeUrl(raw) {
+            let clean = raw.trim();
+            if (!clean) return null;
+            if (!clean.startsWith('http://') && !clean.startsWith('https://')) {
+                clean = 'https://' + clean;
+            }
+            try {
+                const urlObj = new URL(clean);
+                return urlObj.toString();
+            } catch (err) {
+                return null;
+            }
+        }
+
+        function showAlert(message, type) {
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type} show`;
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 5000);
+        }
+
+        function setLoading(loading) {
+            if (loading) {
+                convertBtn.disabled = true;
+                convertBtn.innerHTML = `<div class="spinner"></div> Memproses ...`;
+            } else {
+                convertBtn.disabled = false;
+                convertBtn.innerHTML = `<span>📦</span> Konversi ke ZIP`;
+            }
+        }
+
+        function clearResult() {
+            resultArea.innerHTML = '';
+        }
+
+        function displaySuccess(downloadUrl, metadata) {
+            const filesCount = metadata?.copiedFilesAmount ?? '?';
+            const responseTime = metadata?.responseTime ?? 'N/A';
+            const sourceUrl = metadata?.urlOriginal ?? '';
+
+            resultArea.innerHTML = `
+                <div class="result-card">
+                    <div class="result-header">
+                        <span>✅</span> ZIP siap diunduh
+                    </div>
+                    <div class="download-box">
+                        <a href="${downloadUrl}" class="download-link" id="downloadLink" target="_blank">${downloadUrl}</a>
+                        <button class="btn-small" id="copyBtn">📋 Salin tautan</button>
+                        <a href="${downloadUrl}" class="btn-small" style="background: var(--success); color: black; text-decoration: none;" download>⬇️ Unduh ZIP</a>
+                    </div>
+                    <div class="meta-info">
+                        <span>🗂️ Total aset: ${filesCount} file</span>
+                        <span>⚡ Waktu: ${responseTime}</span>
+                        <span>🔗 Sumber: ${sourceUrl.length > 55 ? sourceUrl.slice(0,55)+'…' : sourceUrl}</span>
+                    </div>
+                    <p style="font-size: 0.7rem; margin-top: 14px; font-weight: 500;">💡 Arsip .zip berisi snapshot halaman: HTML, stylesheet, script, dan media.</p>
+                </div>
+            `;
+
+            const copyBtn = document.getElementById('copyBtn');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    navigator.clipboard.writeText(downloadUrl).then(() => {
+                        copyBtn.textContent = '✅ Tersalin!';
+                        setTimeout(() => { copyBtn.textContent = '📋 Salin tautan'; }, 2000);
+                    }).catch(() => showAlert('Gagal menyalin, salin manual.', 'error'));
+                });
+            }
+        }
+
+        // API call ke endpoint yang diberikan (tanpa elemen yoga xd, murni web to zip)
+        async function convertWebToZip(fullUrl) {
+            const apiEndpoint = `https://api.nexray.eu.cc/tools/webtozip?url=${encodeURIComponent(fullUrl)}`;
+            const response = await fetch(apiEndpoint, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (!response.ok) {
+                let errDetail = `HTTP ${response.status}`;
+                try {
+                    const errorJson = await response.json();
+                    errDetail = errorJson?.message || errorJson?.error || errDetail;
+                } catch(e) {}
+                throw new Error(`Gagal: ${errDetail}`);
+            }
+
+            const data = await response.json();
+            // struktur sesuai API: { status, author, result: { downloadUrl, copiedFilesAmount, url, error } }
+            if (!data || data.status !== true) {
+                const reason = data?.result?.error?.text || data?.message || 'API mengembalikan status gagal';
+                throw new Error(reason);
+            }
+
+            const downloadUrl = data?.result?.downloadUrl;
+            if (!downloadUrl || typeof downloadUrl !== 'string') {
+                throw new Error('Server tidak mengirimkan link unduhan.');
+            }
+
+            const metadata = {
+                copiedFilesAmount: data?.result?.copiedFilesAmount ?? 0,
+                responseTime: data?.response_time ?? 'N/A',
+                urlOriginal: data?.result?.url ?? fullUrl,
+                author: data?.author || 'NexRay'
+            };
+            return { downloadUrl, metadata };
+        }
+
+        async function handleConvert() {
+            const rawUrl = urlInput.value.trim();
+            if (!rawUrl) {
+                showAlert('Masukkan URL website terlebih dahulu.', 'error');
+                return;
+            }
+
+            const normalized = normalizeUrl(rawUrl);
+            if (!normalized) {
+                showAlert('URL tidak valid. Gunakan format: contoh.com atau https://domain.com/path', 'error');
+                return;
+            }
+
+            setLoading(true);
+            clearResult();
+            try {
+                const { downloadUrl, metadata } = await convertWebToZip(normalized);
+                displaySuccess(downloadUrl, metadata);
+                // scroll ke hasil
+                document.getElementById('resultArea')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (err) {
+                console.error(err);
+                let friendlyMsg = err.message || 'Kesalahan tak terduga. Coba periksa URL atau coba lagi.';
+                if (friendlyMsg.includes('Failed to fetch') || friendlyMsg.includes('NetworkError')) {
+                    friendlyMsg = 'Gagal terhubung ke layanan API. Periksa koneksi internet Anda.';
+                }
+                showAlert(`⚠️ ${friendlyMsg}`, 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        convertBtn.addEventListener('click', handleConvert);
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleConvert();
+        });
+
+        // Contoh tombol cepat isi URL
+        document.querySelectorAll('.example-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const demoUrl = btn.getAttribute('data-url');
+                if (demoUrl) {
+                    urlInput.value = demoUrl;
+                    urlInput.focus();
+                }
+            });
+        });
+
+        // Mock back link / info (tidak ada fungsi redirect ke yoga xd)
+        const backMock = document.getElementById('backMockBtn');
+        if (backMock) {
+            backMock.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAlert('🏠 Halaman utama (demo interaksi) – Web to ZIP Converter', 'success');
+            });
+        }
+        const infoMock = document.getElementById('infoMock');
+        if (infoMock) {
+            infoMock.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAlert('✨ Konverter website ke ZIP menggunakan API publik. Simpan arsip website lengkap dalam hitungan detik.', 'success');
+            });
+        }
+
+        // Parameter URL ?url= otomatis proses
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoUrl = urlParams.get('url');
+        if (autoUrl) {
+            urlInput.value = autoUrl;
+            setTimeout(() => handleConvert(), 400);
+        }
+    </script>
+</body>
+</html>
